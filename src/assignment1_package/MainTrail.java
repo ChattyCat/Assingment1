@@ -6,7 +6,7 @@ public class MainTrail {
 		Register reg = new Register();
 		reg.retrieveAllStuReg();
 		String sID = "S1";
-		System.out.println(reg.retrieveStuReg( sID).getsName());
+		System.out.println(reg.retrieveStuReg( sID));
 
 	}
 
