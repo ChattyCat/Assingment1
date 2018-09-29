@@ -1,4 +1,4 @@
-package assignment1_package;
+package io_pack;
 import java.util.*;
 
 public class Register {

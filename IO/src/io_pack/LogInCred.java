@@ -1,4 +1,4 @@
-package assignment1_package;
+package io_pack;
 
 public class LogInCred {
 	private static final String url = "jdbc:sqlserver://localhost:1433;database=Assignment1";

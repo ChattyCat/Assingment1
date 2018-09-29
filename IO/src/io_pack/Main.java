@@ -1,4 +1,4 @@
-package assignment1_package;
+package io_pack;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

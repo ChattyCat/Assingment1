@@ -1,4 +1,4 @@
-package assignment1_package;
+package io_pack;
 
 public class Course {
 	private String cID;

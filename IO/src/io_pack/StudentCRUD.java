@@ -1,31 +1,34 @@
-package assignment1_package;
+package io_pack;
 
+import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-public class CourseCRUD {
-	public static Course getCourseFromDB(ResultSet rs) throws SQLException {
-		Course course = new Course();
+
+public class StudentCRUD {
+	
+	public static Student getStudentFromDB(ResultSet rs) throws SQLException {
+		Student student = new Student();
 		
-		course.setcID(rs.getString("cID"));
-		course.setcName(rs.getString("cName"));
+		student.setsID(rs.getString("sID"));
+		student.setsName(rs.getString("sName"));
+		student.setPoints(rs.getInt("points"));
 		
-		return course;
+		return student;
 	}
-	public static boolean create(Course course) {
+	public static boolean create(Student student) {
 		dbConnection dbCon = new dbConnection();
-		
+		//Connector connector = new Connector();
 		Connection con = dbCon.getConnection();
 		
 		try {
-	    PreparedStatement ps = con.prepareStatement("insert into Course values(?, ?, ?)");
-	    ps.setString(0, course.getcID());
-	    ps.setString(1, course.getcName());
+	    PreparedStatement ps = con.prepareStatement("insert into Student values(?, ?, ?)");
+	    ps.setString(0, student.getsID());
+	    ps.setString(1, student.getsName());
+	    ps.setInt(2, student.getPoints());
 		
 	    if (ps.executeUpdate() == 1) {
 	    	return true;
@@ -37,18 +40,18 @@ public class CourseCRUD {
 		}
 		return false;
 	}
-	public Course retrieve(String cID) {
+	public Student retrieve(String sID) {
 		dbConnection dbCon = new dbConnection();
 		
 		Connection con = dbCon.getConnection();
 		
 		try {
-		String query = "select * from Course where cID = " + cID;
+		String query = "select * from Student where sID = " + sID;
 		Statement stmt = con.createStatement();
 	    ResultSet rs = stmt.executeQuery(query);
 	    
 	    if (rs.next()) {
-	    	return getCourseFromDB(rs);
+	    	return getStudentFromDB(rs);
 	    }
 	    
 		} catch (SQLException e) {
@@ -57,15 +60,16 @@ public class CourseCRUD {
 		}
 		return null;
 	}
-	public static boolean update(Course course) {
+	public static boolean update(Student student) {
 		dbConnection dbCon = new dbConnection();
 		
 		Connection con = dbCon.getConnection();
 		
 		try {
-	    PreparedStatement ps = con.prepareStatement("update Course set cName = ? where cID = ?");
-	    ps.setString(0, course.getcName());
-	    ps.setString(1, course.getcID());
+	    PreparedStatement ps = con.prepareStatement("update Student set sName = ?, points = ? where sID = ?");
+	    ps.setString(0, student.getsName());
+	    ps.setInt(1, student.getPoints());
+	    ps.setString(2, student.getsID());
 		
 	    if (ps.executeUpdate() == 1) {
 	    	return true;
@@ -76,14 +80,14 @@ public class CourseCRUD {
 		}
 		return false;
 	}
-	public static boolean delete(String cID) {
+	public static boolean delete(String sID) {
 		dbConnection dbCon = new dbConnection();
 		Connection con = dbCon.getConnection();
 		
 		try {
 		Statement stmt = con.createStatement();
 		
-	    if (stmt.executeUpdate("delete from Course where cID = " + cID) == 1) {
+	    if (stmt.executeUpdate("delete from Student where sID = " + sID) == 1) {
 	    	return true;
 	    }
 	    
@@ -92,24 +96,24 @@ public class CourseCRUD {
 		}
 		return false;
 	}
-	public static List<Course> retrieveAll() {
+	public static List<Student> retrieveAll() {
 		dbConnection dbCon = new dbConnection();
 		
 		Connection con = dbCon.getConnection();
 		
 		//Statement stmt = null; 
 		try {
-		String query = "select * from Course";
+		String query = "select * from Student";
 		Statement stmt = con.createStatement();
 	    ResultSet rs = stmt.executeQuery(query);
 	    
-	    List<Course> courses = new ArrayList<Course>();
+	    List<Student> students = new ArrayList<Student>();
 	    
 	    while (rs.next()) {
-	    	Course course = getCourseFromDB(rs);
-	    	courses.add(course);
+	    	Student student = getStudentFromDB(rs);
+	    	students.add(student);
 	    }
-	    return courses;
+	    return students;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			
